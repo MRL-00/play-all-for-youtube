@@ -1,0 +1,161 @@
+/* Play All for YouTube — play-all pill.
+   Three mounts share one look: filled red pill, white label. Self-coloured on
+   purpose, so it reads the same in YouTube's light and dark themes and can
+   never inherit a low-contrast text colour from the surrounding header. */
+
+#ytpa-play-all {
+  box-sizing: border-box;
+  margin: 0;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  background: #e00000;
+  color: #fff;
+  border: 0;
+  font-family: "YouTube Sans", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: background 120ms ease, box-shadow 120ms ease, transform 100ms ease;
+}
+
+#ytpa-play-all:hover {
+  background: #ff0d0d;
+}
+
+#ytpa-play-all:active {
+  background: #c00;
+}
+
+#ytpa-play-all:focus-visible {
+  outline: 2px solid #ff6b6b;
+  outline-offset: 2px;
+}
+
+#ytpa-play-all .ytpa-btn__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  color: #fff;
+}
+
+#ytpa-play-all[data-busy="true"] .ytpa-btn__icon {
+  animation: ytpa-pulse 900ms ease-in-out infinite;
+}
+
+#ytpa-play-all[data-busy="true"] {
+  cursor: progress;
+}
+
+@keyframes ytpa-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.86); }
+}
+
+/* ------------------------------------------------------------------ *
+ * Mode 1: chip row, sitting after Latest / Popular / Oldest
+ * Chips are 32px tall with an 8px radius — match them, but stay red.
+ * ------------------------------------------------------------------ */
+
+#ytpa-play-all.ytpa-btn--chip {
+  flex: 0 0 auto;
+  height: 32px;
+  padding: 0 12px 0 10px;
+  border-radius: 8px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
+}
+
+#ytpa-play-all.ytpa-btn--chip .ytpa-btn__icon {
+  width: 16px;
+  height: 16px;
+}
+
+/* ------------------------------------------------------------------ *
+ * Mode 2: channel header, next to Subscribe (height set inline to match)
+ * ------------------------------------------------------------------ */
+
+#ytpa-play-all.ytpa-btn--inline {
+  height: 36px;
+  padding: 0 16px 0 13px;
+  border-radius: 999px;
+  box-shadow: none;
+}
+
+/* ------------------------------------------------------------------ *
+ * Mode 3: floating pill, used only when neither row exists
+ * ------------------------------------------------------------------ */
+
+#ytpa-play-all.ytpa-btn--floating {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 2147483000;
+
+  padding: 10px 18px 10px 13px;
+  border-radius: 999px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35), 0 4px 12px rgba(224, 0, 0, 0.35);
+}
+
+#ytpa-play-all.ytpa-btn--floating:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.45), 0 6px 16px rgba(255, 13, 13, 0.4);
+}
+
+#ytpa-play-all.ytpa-btn--floating:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* ------------------------------------------------------------------ *
+ * Toast
+ * ------------------------------------------------------------------ */
+
+#ytpa-toast {
+  position: fixed;
+  right: 24px;
+  bottom: 78px;
+  z-index: 2147483001;
+
+  max-width: 320px;
+  padding: 12px 16px;
+  border-radius: 12px;
+
+  background: rgba(16, 16, 16, 0.94);
+  color: #fff;
+  font-family: "YouTube Sans", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 13px;
+  line-height: 1.4;
+
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 400ms ease, transform 400ms ease;
+}
+
+#ytpa-toast.ytpa-toast--out {
+  opacity: 0;
+  transform: translateY(6px);
+}
+
+html:not([dark]) #ytpa-toast {
+  background: rgba(255, 255, 255, 0.97);
+  color: #0f0f0f;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.16);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #ytpa-play-all,
+  #ytpa-toast {
+    transition: none;
+    animation: none;
+  }
+}

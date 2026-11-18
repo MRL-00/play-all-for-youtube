@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Play All for YouTube</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <header class="head">
+      <img src="../icons/icon48.png" alt="" width="28" height="28" />
+      <div>
+        <h1>Play all</h1>
+        <p class="sub">Every upload, as one playlist</p>
+      </div>
+    </header>
+
+    <section class="status" id="status">
+      <p class="status__text" id="statusText">Checking this tab…</p>
+      <button type="button" class="primary" id="playBtn" hidden>Play all uploads</button>
+    </section>
+
+    <label class="toggle">
+      <input type="checkbox" id="enabled" checked />
+      <span>Show the Play all button on channel pages</span>
+    </label>
+
+    <p class="hint">
+      Shortcut: <kbd>Alt</kbd> + <kbd>P</kbd><br />
+      <kbd>Cmd</kbd>/<kbd>Ctrl</kbd>-click the button to open the playlist in a new tab.
+    </p>
+
+    <script src="popup.js"></script>
+  </body>
+</html>

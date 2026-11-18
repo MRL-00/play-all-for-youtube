@@ -1,0 +1,11 @@
+{
+  "name": "play-all-for-youtube",
+  "version": "1.2.0",
+  "private": true,
+  "description": "Chrome extension that restores a Play all button to YouTube channel pages.",
+  "scripts": {
+    "test": "node test/run-tests.js",
+    "test:live": "node test/live-check.js",
+    "icons": "node scripts/make-icons.js"
+  }
+}

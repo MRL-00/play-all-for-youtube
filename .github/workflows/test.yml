@@ -1,0 +1,56 @@
+name: test
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  logic:
+    name: logic tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Run tests
+        run: npm test
+
+  syntax:
+    name: syntax + manifest
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Check JS parses
+        run: |
+          for file in main-world.js background.js content/content.js popup/popup.js scripts/make-icons.js test/run-tests.js test/live-check.js; do
+            node --check "$file"
+          done
+
+      - name: Validate manifest and versions match
+        run: |
+          node -e '
+            const fs = require("node:fs");
+            const manifest = JSON.parse(fs.readFileSync("manifest.json", "utf8"));
+            const pkg = JSON.parse(fs.readFileSync("package.json", "utf8"));
+            if (manifest.manifest_version !== 3) throw new Error("not MV3");
+            if (manifest.version !== pkg.version) {
+              throw new Error(`version mismatch: manifest ${manifest.version} vs package ${pkg.version}`);
+            }
+            for (const path of Object.values(manifest.icons)) {
+              if (!fs.existsSync(path)) throw new Error(`missing icon ${path}`);
+            }
+            console.log(`manifest ok, version ${manifest.version}`);
+          '
